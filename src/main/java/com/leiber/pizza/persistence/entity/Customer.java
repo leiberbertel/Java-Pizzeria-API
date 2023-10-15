@@ -1,16 +1,19 @@
 package com.leiber.pizza.persistence.entity;
 
+import com.leiber.pizza.persistence.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "customer")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer {
+public class Customer extends Auditable {
 
     @Id
     @Column(name = "id_customer", nullable = false, length = 15)

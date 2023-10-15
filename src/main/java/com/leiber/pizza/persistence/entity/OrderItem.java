@@ -1,18 +1,21 @@
 package com.leiber.pizza.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.leiber.pizza.persistence.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "order_item")
+@EntityListeners(AuditingEntityListener.class)
 @IdClass(OrderItemId.class)
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderItem {
+public class OrderItem extends Auditable {
 
     @Id
     @Column(name = "id_order", nullable = false)

@@ -1,10 +1,12 @@
 package com.leiber.pizza.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.leiber.pizza.persistence.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,10 +14,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "pizza_order")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
-public class Order {
+public class Order extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,5 +46,6 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OrderBy("price DESC")
     private List<OrderItem> OrderItems = new ArrayList<>();
 }
