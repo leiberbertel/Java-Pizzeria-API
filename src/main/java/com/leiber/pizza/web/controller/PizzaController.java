@@ -1,10 +1,10 @@
 package com.leiber.pizza.web.controller;
 
-import com.leiber.pizza.errors.PizzaNotFoundException;
 import com.leiber.pizza.persistence.entity.Pizza;
 import com.leiber.pizza.services.PizzaServices;
+import com.leiber.pizza.services.dto.UpdatePizzaPriceDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,43 +22,55 @@ public class PizzaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Pizza>> getAll(){
-        return ResponseEntity.ok(this.pizzaServices.getAll());
+    public ResponseEntity<Page<Pizza>> getAll(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "8") int elements){
+        Page<Pizza> pizzas = this.pizzaServices.getAll(page, elements);
+        return ResponseEntity.ok(pizzas);
     }
 
     @GetMapping("/unavailable")
     public ResponseEntity<List<Pizza>> getUnavailablePizza() {
-        return ResponseEntity.ok(this.pizzaServices.getUnavailable());
+        List<Pizza> pizzas = this.pizzaServices.getUnavailable();
+        return ResponseEntity.ok(pizzas);
     }
 
     @GetMapping("/available")
-    public ResponseEntity<List<Pizza>> getAvailablePizza() {
-        return ResponseEntity.ok(this.pizzaServices.getAvailable());
+    public ResponseEntity<Page<Pizza>> getAvailablePizza(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "8") int elements,
+                                                         @RequestParam(defaultValue = "price") String sortBy,
+                                                         @RequestParam(defaultValue = "ASC") String sortDirection) {
+        Page<Pizza> pizzas = this.pizzaServices.getAvailable(page, elements, sortBy, sortDirection);
+        return ResponseEntity.ok(pizzas);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<Pizza> getByName(@PathVariable String name) {
-        return ResponseEntity.ok(this.pizzaServices.getByName(name));
+        Pizza pizza = this.pizzaServices.getByName(name);
+        return ResponseEntity.ok(pizza);
     }
 
     @GetMapping("/with/{ingredient}")
     public ResponseEntity<List<Pizza>> getWith(@PathVariable String ingredient) {
-        return ResponseEntity.ok(this.pizzaServices.getWith(ingredient));
+        List<Pizza> pizzas = this.pizzaServices.getWith(ingredient);
+        return ResponseEntity.ok(pizzas);
     }
 
     @GetMapping("/without/{ingredient}")
     public ResponseEntity<List<Pizza>> getNotWith(@PathVariable String ingredient) {
-        return ResponseEntity.ok(this.pizzaServices.getWithOut(ingredient));
+        List<Pizza> pizzas = this.pizzaServices.getWithOut(ingredient);
+        return ResponseEntity.ok(pizzas);
     }
 
     @GetMapping("/vegan")
     public ResponseEntity<Integer> getCountVeganPizza() {
-        return ResponseEntity.ok(this.pizzaServices.countVeganPizza());
+        Integer count = this.pizzaServices.countVeganPizza();
+        return ResponseEntity.ok(count);
     }
 
     @GetMapping("/cheapest/{price}")
     public ResponseEntity<List<Pizza>> getCheapestPizzas(@PathVariable double price) {
-        return ResponseEntity.ok(this.pizzaServices.getCheapest(price));
+        List<Pizza> pizzas = this.pizzaServices.getCheapest(price);
+        return ResponseEntity.ok(pizzas);
     }
 
     @GetMapping("/{id}")
@@ -69,12 +81,20 @@ public class PizzaController {
 
     @PostMapping
     public ResponseEntity<Pizza> add(@RequestBody Pizza pizza) {
-        return ResponseEntity.ok(this.pizzaServices.save(pizza));
+        Pizza pizzaAdded = this.pizzaServices.save(pizza);
+        return ResponseEntity.ok(pizzaAdded);
     }
 
     @PutMapping
     public ResponseEntity<Pizza> update(@RequestBody Pizza pizza) {
-        return ResponseEntity.ok(this.pizzaServices.update(pizza));
+        Pizza pizzaUpdate = this.pizzaServices.update(pizza);
+        return ResponseEntity.ok(pizzaUpdate);
+    }
+
+    @PutMapping("/price")
+    public ResponseEntity<Void> updatePrice(@RequestBody UpdatePizzaPriceDto dto) {
+        this.pizzaServices.updatePrice(dto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

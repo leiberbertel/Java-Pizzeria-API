@@ -1,12 +1,12 @@
 package com.leiber.pizza.web.controller;
 
 import com.leiber.pizza.persistence.entity.Order;
+import com.leiber.pizza.persistence.projection.OrderSummary;
 import com.leiber.pizza.services.OrderServices;
+import com.leiber.pizza.services.dto.RamdonOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,21 +22,41 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<Order>> all() {
-        return ResponseEntity.ok(this.orderServices.getAll());
+        List<Order> orders = this.orderServices.getAll();
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/today")
     public ResponseEntity<List<Order>> getTodayOrder() {
-        return ResponseEntity.ok(this.orderServices.getTodayOrders());
+        List<Order> orders = this.orderServices.getTodayOrders();
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/outside")
     public ResponseEntity<List<Order>> getOutsideOrders() {
-        return ResponseEntity.ok(this.orderServices.getOutsideOrders());
+        List<Order> orders = this.orderServices.getOutsideOrders();
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/onside")
     public ResponseEntity<List<Order>> getOnSideOrders() {
-        return ResponseEntity.ok(this.orderServices.getOnSideOrders());
+        List<Order> orders = this.orderServices.getOnSideOrders();
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<List<Order>> getCustomerOrder(@PathVariable String id) {
+        List<Order> orders = this.orderServices.getCustomerOrder(id);
+        return ResponseEntity.ok(orders);
+    }
+    @GetMapping("/summary/{id}")
+    public ResponseEntity<OrderSummary> getSummary(@PathVariable  int id) {
+        OrderSummary summary = this.orderServices.getSummary(id);
+        return ResponseEntity.ok(summary);
+    }
+
+    @PostMapping("/random")
+    public ResponseEntity<Boolean> randomOrder(@RequestBody RamdonOrderDto dto) {
+        return ResponseEntity.ok(this.orderServices.saveRandomOrder(dto));
     }
 }
