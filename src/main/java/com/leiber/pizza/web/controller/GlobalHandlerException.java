@@ -1,8 +1,8 @@
 package com.leiber.pizza.web.controller;
 
-import com.leiber.pizza.errors.PizzaAlreadyExistsException;
-import com.leiber.pizza.errors.PizzaNotFoundException;
-import com.leiber.pizza.errors.PizzaWithIdNullException;
+import com.leiber.pizza.exception.PizzaAlreadyExistsException;
+import com.leiber.pizza.exception.PizzaNotFoundException;
+import com.leiber.pizza.exception.PizzaWithIdNullException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
