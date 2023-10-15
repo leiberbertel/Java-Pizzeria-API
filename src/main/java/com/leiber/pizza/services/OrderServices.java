@@ -1,9 +1,12 @@
 package com.leiber.pizza.services;
 
 import com.leiber.pizza.persistence.entity.Order;
+import com.leiber.pizza.persistence.projection.OrderSummary;
 import com.leiber.pizza.persistence.repository.OrderRepository;
+import com.leiber.pizza.services.dto.RamdonOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -41,5 +44,18 @@ public class OrderServices {
     public List<Order> getOnSideOrders() {
         List<String> methods = List.of(ON_SITE);
         return this.orderRepository.findAllByMethodIn(methods);
+    }
+
+    public List<Order> getCustomerOrder(String idCustomer) {
+        return this.orderRepository.findCustomerOrders(idCustomer);
+    }
+
+    public OrderSummary getSummary(int orderId) {
+        return this.orderRepository.findSummary(orderId);
+    }
+
+    @Transactional
+    public boolean saveRandomOrder(RamdonOrderDto ramdonOrderDto) {
+        return this.orderRepository.saveRandomOrder(ramdonOrderDto.getIdCustomer(), ramdonOrderDto.getMethod());
     }
 }
