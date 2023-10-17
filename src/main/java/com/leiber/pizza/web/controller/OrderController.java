@@ -1,8 +1,8 @@
 package com.leiber.pizza.web.controller;
 
-import com.leiber.pizza.persistence.entity.Order;
+import com.leiber.pizza.persistence.entity.OrderEntity;
 import com.leiber.pizza.persistence.projection.OrderSummary;
-import com.leiber.pizza.services.OrderServices;
+import com.leiber.pizza.services.OrderService;
 import com.leiber.pizza.services.dto.RamdonOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,50 +13,50 @@ import java.util.List;
 @RestController
 @RequestMapping("api/orders")
 public class OrderController {
-    private final OrderServices orderServices;
+    private final OrderService orderService;
 
     @Autowired
-    public OrderController(OrderServices orderServices) {
-        this.orderServices = orderServices;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> all() {
-        List<Order> orders = this.orderServices.getAll();
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderEntity>> all() {
+        List<OrderEntity> orderEntities = this.orderService.getAll();
+        return ResponseEntity.ok(orderEntities);
     }
 
     @GetMapping("/today")
-    public ResponseEntity<List<Order>> getTodayOrder() {
-        List<Order> orders = this.orderServices.getTodayOrders();
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderEntity>> getTodayOrder() {
+        List<OrderEntity> orderEntities = this.orderService.getTodayOrders();
+        return ResponseEntity.ok(orderEntities);
     }
 
     @GetMapping("/outside")
-    public ResponseEntity<List<Order>> getOutsideOrders() {
-        List<Order> orders = this.orderServices.getOutsideOrders();
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderEntity>> getOutsideOrders() {
+        List<OrderEntity> orderEntities = this.orderService.getOutsideOrders();
+        return ResponseEntity.ok(orderEntities);
     }
 
     @GetMapping("/onside")
-    public ResponseEntity<List<Order>> getOnSideOrders() {
-        List<Order> orders = this.orderServices.getOnSideOrders();
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderEntity>> getOnSideOrders() {
+        List<OrderEntity> orderEntities = this.orderService.getOnSideOrders();
+        return ResponseEntity.ok(orderEntities);
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<List<Order>> getCustomerOrder(@PathVariable String id) {
-        List<Order> orders = this.orderServices.getCustomerOrder(id);
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderEntity>> getCustomerOrder(@PathVariable String id) {
+        List<OrderEntity> orderEntities = this.orderService.getCustomerOrder(id);
+        return ResponseEntity.ok(orderEntities);
     }
     @GetMapping("/summary/{id}")
     public ResponseEntity<OrderSummary> getSummary(@PathVariable  int id) {
-        OrderSummary summary = this.orderServices.getSummary(id);
+        OrderSummary summary = this.orderService.getSummary(id);
         return ResponseEntity.ok(summary);
     }
 
     @PostMapping("/random")
     public ResponseEntity<Boolean> randomOrder(@RequestBody RamdonOrderDto dto) {
-        return ResponseEntity.ok(this.orderServices.saveRandomOrder(dto));
+        return ResponseEntity.ok(this.orderService.saveRandomOrder(dto));
     }
 }

@@ -1,6 +1,6 @@
 package com.leiber.pizza.web.controller;
 
-import com.leiber.pizza.persistence.entity.Customer;
+import com.leiber.pizza.persistence.entity.CustomerEntity;
 import com.leiber.pizza.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ public class CustomerController {
     }
 
     @GetMapping("/phone/{phone}")
-    public ResponseEntity<Customer> getByPhone(@PathVariable String phone) {
-        Customer customer = this.customerService.findByPhone(phone);
-        return ResponseEntity.ok(customer);
+    public ResponseEntity<CustomerEntity> getByPhone(@PathVariable String phone) {
+        CustomerEntity customerEntity = this.customerService.findByPhone(phone);
+        return ResponseEntity.ok(customerEntity);
     }
 }
