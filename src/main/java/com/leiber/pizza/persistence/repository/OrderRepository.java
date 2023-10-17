@@ -1,8 +1,7 @@
 package com.leiber.pizza.persistence.repository;
 
-import com.leiber.pizza.persistence.entity.Order;
+import com.leiber.pizza.persistence.entity.OrderEntity;
 import com.leiber.pizza.persistence.projection.OrderSummary;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.ListCrudRepository;
@@ -11,13 +10,13 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface OrderRepository extends ListCrudRepository<Order, Integer> {
-    List<Order> findAllByDateAfter(LocalDateTime date);
+public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer> {
+    List<OrderEntity> findAllByDateAfter(LocalDateTime date);
 
-    List<Order> findAllByMethodIn(List<String> methods);
+    List<OrderEntity> findAllByMethodIn(List<String> methods);
 
     @Query(value = "SELECT * FROM pizza_order WHERE id_customer = :id", nativeQuery = true)
-    List<Order> findCustomerOrders(@Param("id") String idCustomer);
+    List<OrderEntity> findCustomerOrders(@Param("id") String idCustomer);
 
     @Query(value =
             "SELECT po.id_order AS idOrder, cu.name AS customerName, po.date AS orderDate, " +
