@@ -13,7 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer extends Auditable {
+public class CustomerEntity extends Auditable {
 
     @Id
     @Column(name = "id_customer", nullable = false, length = 15)

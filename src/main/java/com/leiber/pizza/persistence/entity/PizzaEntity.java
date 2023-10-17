@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Pizza extends Auditable implements Serializable {
+public class PizzaEntity extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

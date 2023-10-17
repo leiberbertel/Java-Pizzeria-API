@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Order extends Auditable {
+public class OrderEntity extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +43,9 @@ public class Order extends Auditable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer", insertable = false, updatable = false)
     @JsonIgnore
-    private Customer customer;
+    private CustomerEntity customerEntity;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orderEntity", fetch = FetchType.EAGER)
     @OrderBy("price DESC")
-    private List<OrderItem> OrderItems = new ArrayList<>();
+    private List<OrderItemEntity> orderItemEntities = new ArrayList<>();
 }

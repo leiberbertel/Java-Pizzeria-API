@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderItem extends Auditable {
+public class OrderItemEntity extends Auditable {
 
     @Id
     @Column(name = "id_order", nullable = false)
@@ -37,9 +37,9 @@ public class OrderItem extends Auditable {
     @ManyToOne()
     @JoinColumn(name = "id_order", referencedColumnName = "id_order", insertable = false, updatable = false)
     @JsonIgnore
-    private Order order;
+    private OrderEntity orderEntity;
 
     @OneToOne()
     @JoinColumn(name = "id_pizza", referencedColumnName = "id_pizza", insertable = false, updatable = false)
-    private Pizza pizza;
+    private PizzaEntity pizzaEntity;
 }
