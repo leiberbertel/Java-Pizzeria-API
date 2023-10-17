@@ -1,6 +1,6 @@
 package com.leiber.pizza.services;
 
-import com.leiber.pizza.persistence.entity.Customer;
+import com.leiber.pizza.persistence.entity.CustomerEntity;
 import com.leiber.pizza.persistence.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public Customer findByPhone(String phone) {
+    public CustomerEntity findByPhone(String phone) {
         return this.customerRepository.findByPhoneNumberJPQL(phone);
     }
 }

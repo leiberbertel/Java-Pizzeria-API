@@ -1,6 +1,6 @@
 package com.leiber.pizza.services;
 
-import com.leiber.pizza.persistence.entity.Order;
+import com.leiber.pizza.persistence.entity.OrderEntity;
 import com.leiber.pizza.persistence.projection.OrderSummary;
 import com.leiber.pizza.persistence.repository.OrderRepository;
 import com.leiber.pizza.services.dto.RamdonOrderDto;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class OrderServices {
+public class OrderService {
 
     private static final String DELIVERY = "D";
     private static final String CARRYOUT = "C";
@@ -23,30 +23,30 @@ public class OrderServices {
     private final OrderRepository orderRepository;
 
     @Autowired
-    public OrderServices(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getAll() {
+    public List<OrderEntity> getAll() {
         return this.orderRepository.findAll();
     }
 
-    public List<Order> getTodayOrders() {
+    public List<OrderEntity> getTodayOrders() {
         LocalDateTime today = LocalDate.now().atTime(0, 0);
         return this.orderRepository.findAllByDateAfter(today);
     }
 
-    public List<Order> getOutsideOrders() {
+    public List<OrderEntity> getOutsideOrders() {
         List<String> methods = Arrays.asList(DELIVERY, CARRYOUT);
         return this.orderRepository.findAllByMethodIn(methods);
     }
 
-    public List<Order> getOnSideOrders() {
+    public List<OrderEntity> getOnSideOrders() {
         List<String> methods = List.of(ON_SITE);
         return this.orderRepository.findAllByMethodIn(methods);
     }
 
-    public List<Order> getCustomerOrder(String idCustomer) {
+    public List<OrderEntity> getCustomerOrder(String idCustomer) {
         return this.orderRepository.findCustomerOrders(idCustomer);
     }
 
