@@ -5,6 +5,7 @@ import com.leiber.pizza.persistence.projection.OrderSummary;
 import com.leiber.pizza.persistence.repository.OrderRepository;
 import com.leiber.pizza.services.dto.RamdonOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,7 @@ public class OrderService {
         return this.orderRepository.findAllByMethodIn(methods);
     }
 
+    @Secured("ROLE_ADMIN")
     public List<OrderEntity> getCustomerOrder(String idCustomer) {
         return this.orderRepository.findCustomerOrders(idCustomer);
     }

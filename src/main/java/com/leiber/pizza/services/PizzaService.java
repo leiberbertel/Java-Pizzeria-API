@@ -47,7 +47,7 @@ public class PizzaService {
 
     public PizzaEntity getByName(String name){
         return this.pizzaRepository.findFirstByAvailableTrueAndNameIgnoreCase(name)
-                .orElseThrow(() -> new RuntimeException("No existe la pizza con el nombre: " + name));
+                .orElseThrow(PizzaNotFoundException::new);
     }
 
     public List<PizzaEntity> getCheapest(@PathVariable Double price){
@@ -74,7 +74,7 @@ public class PizzaService {
 
     public PizzaEntity getPizzaById(int id) {
         return this.pizzaRepository.findById(id)
-                .orElseThrow(() -> new PizzaNotFoundException(id));
+                .orElseThrow(PizzaNotFoundException::new);
     }
 
     public PizzaEntity save(PizzaEntity pizzaEntity) {
@@ -92,7 +92,7 @@ public class PizzaService {
             throw new PizzaWithIdNullException();
         }
         if (!this.pizzaRepository.existsById(pizzaEntity.getIdPizza())) {
-            throw new PizzaNotFoundException(pizzaEntity.getIdPizza());
+            throw new PizzaNotFoundException();
         }
 
         return this.pizzaRepository.save(pizzaEntity);
@@ -100,7 +100,7 @@ public class PizzaService {
 
     public void delete(int id) {
         if (!this.pizzaRepository.existsById(id)){
-            throw new PizzaNotFoundException(id);
+            throw new PizzaNotFoundException();
         }
         this.pizzaRepository.deleteById(id);
     }
