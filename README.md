@@ -35,11 +35,14 @@ gradlew.bat build
 gradlew.bat bootRun
 ```
 
-This will run the Spring project directly
+The Spring Boot application will launch and be running on port 8080
 
-## Endpoints
+All endpoints and schemas are documented using Swagger UI. You can view the documentation at http://localhost:8080/swagger-ui/index.html#/, which is the default endpoint for the Swagger UI.
 
-The API has the following endpoints:
-
-
-All endpoints are documented using Swagger UI. You can view the documentation at http://localhost:8080/swagger-ui/index.html#/, which is the default endpoint for the Swagger UI.
+## Built with 🛠
+* Java version 17 - Language used
+* Lombok - Tertiary dependency
+* Mysql - Database Engine
+* Spring Framework - Framework used
+* Spring Data JPA - Dependency on data manipulation
+* Springdoc - Dependency on API documentation
