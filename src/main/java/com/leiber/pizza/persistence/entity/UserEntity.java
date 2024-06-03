@@ -7,6 +7,11 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Entidad que representa un usuario en la base de datos.
+ * Hereda los campos de auditoría de la clase {@link Auditable}.
+ * @author Leiber Bertel
+ */
 @Entity
 @Table(name = "user")
 @Getter

@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/**
+ * Entidad que representa un cliente en la base de datos.
+ * Hereda los campos de auditoría de la clase {@link Auditable}.
+ * @author Leiber Bertel
+ */
 @Entity
 @Table(name = "customer")
 @EntityListeners(AuditingEntityListener.class)
@@ -15,7 +20,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @NoArgsConstructor
 public class CustomerEntity extends Auditable {
-
 
     @Id
     @Column(name = "id_customer", nullable = false, length = 15)

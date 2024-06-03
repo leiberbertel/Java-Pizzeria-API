@@ -9,6 +9,13 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
+/**
+ * Clase para entidades auditables.
+ * Proporciona campos para almacenar información de auditoría como fechas de creación y modificación,
+ * los usuarios que crearon y modificaron la entidad.
+ *
+ * @author Leiber Bertel
+ */
 @MappedSuperclass
 public class Auditable {
     @Column(name = "created_date")

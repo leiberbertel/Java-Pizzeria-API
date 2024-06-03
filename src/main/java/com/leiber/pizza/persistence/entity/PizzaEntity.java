@@ -11,6 +11,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 
+/**
+ * Entidad que representa una pizza en la base de datos.
+ * Hereda los campos de auditoría de la clase {@link Auditable}.
+ * @author Leiber Bertel
+ */
 @Entity
 @Table(name = "pizza")
 @EntityListeners({AuditingEntityListener.class, AuditPizzaListener.class})
