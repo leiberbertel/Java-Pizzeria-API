@@ -14,20 +14,44 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
+/**
+ * Filtro JWT que se ejecuta una vez por solicitud para autenticar usuarios basándose en un token JWT.
+ *
+ * @author Leiber Bertel
+ */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+    private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Constructor para inyectar las dependencias de JwtUtil y UserDetailsService.
+     *
+     * @param jwtUtil El utilitario para manejar JWT.
+     * @param userDetailsService El servicio para cargar detalles del usuario.
+     */
     @Autowired
     public JwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Filtro interno para procesar la solicitud HTTP y autenticar el usuario si el token JWT es válido.
+     *
+     * @param request La solicitud HTTP.
+     * @param response La respuesta HTTP.
+     * @param filterChain La cadena de filtros.
+     * @throws ServletException Si ocurre un error en el filtro.
+     * @throws IOException Si ocurre un error de E/S.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
@@ -52,7 +76,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        System.out.println(authenticationToken);
+
+        log.info("authenticationToken: {}", authenticationToken);
         filterChain.doFilter(request, response);
     }
 }

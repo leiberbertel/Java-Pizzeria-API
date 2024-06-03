@@ -7,6 +7,11 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entidad que representa un rol en la base de datos.
+ * Hereda los campos de auditoría de la clase {@link Auditable}.
+ * @author Leiber Bertel
+ */
 @Entity
 @Table(name = "user_role")
 @IdClass(UserRoleId.class)

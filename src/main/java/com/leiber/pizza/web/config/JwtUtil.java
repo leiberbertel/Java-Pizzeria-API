@@ -8,12 +8,23 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Utilitario para manejar operaciones relacionadas con JWT (JSON Web Tokens).
+ * 
+ * @author Leiber Bertel
+ */
 @Component
 public class JwtUtil {
-    private static String SECRET_KEY = "21318737813674623145678251741231671257184382152517412472158";
+    private static final String SECRET_KEY = "21318737813674623145678251741231671257184382152517412472158";
 
-    private static Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
 
+    /**
+     * Crea un token JWT para el nombre de usuario dado.
+     *
+     * @param username El nombre de usuario.
+     * @return El token JWT generado.
+     */
     public String create(String username) {
         return JWT.create()
                 .withSubject(username)
@@ -23,6 +34,12 @@ public class JwtUtil {
                 .sign(ALGORITHM);
     }
 
+    /**
+     * Verifica si un token JWT es válido.
+     *
+     * @param jwt El token JWT.
+     * @return true si el token es válido, false en caso contrario.
+     */
     public boolean isValid(String jwt) {
         try {
             JWT.require(ALGORITHM)
@@ -34,6 +51,12 @@ public class JwtUtil {
         }
     }
 
+    /**
+     * Obtiene el nombre de usuario del token JWT.
+     *
+     * @param jwt El token JWT.
+     * @return El nombre de usuario contenido en el token.
+     */
     public String getUsername (String jwt) {
         return JWT.require(ALGORITHM)
                 .build()

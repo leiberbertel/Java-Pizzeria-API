@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/**
+ * Entidad que representa un elemento perteneciente a una orden en la base de datos.
+ * Hereda los campos de auditoría de la clase {@link Auditable}.
+ * @author Leiber Bertel
+ */
 @Entity
 @Table(name = "order_item")
 @EntityListeners(AuditingEntityListener.class)
