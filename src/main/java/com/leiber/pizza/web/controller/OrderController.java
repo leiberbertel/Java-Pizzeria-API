@@ -4,6 +4,10 @@ import com.leiber.pizza.persistence.entity.OrderEntity;
 import com.leiber.pizza.persistence.projection.OrderSummary;
 import com.leiber.pizza.services.OrderService;
 import com.leiber.pizza.services.dto.RamdonOrderDto;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +41,8 @@ public class OrderController {
      *
      * @return Una respuesta HTTP con la lista de entidades de pedidos.
      */
+    @Operation(summary = "Gets all orders")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping
     public ResponseEntity<List<OrderEntity>> all() {
         List<OrderEntity> orderEntities = this.orderService.getAll();
@@ -48,6 +54,8 @@ public class OrderController {
      *
      * @return Una respuesta HTTP con la lista de entidades de pedidos de hoy.
      */
+    @Operation(summary = "Get all orders placed today")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/today")
     public ResponseEntity<List<OrderEntity>> getTodayOrder() {
         List<OrderEntity> orderEntities = this.orderService.getTodayOrders();
@@ -59,6 +67,8 @@ public class OrderController {
      *
      * @return Una respuesta HTTP con la lista de entidades de pedidos externos.
      */
+    @Operation(summary = "Obtains all external orders")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/outside")
     public ResponseEntity<List<OrderEntity>> getOutsideOrders() {
         List<OrderEntity> orderEntities = this.orderService.getOutsideOrders();
@@ -70,6 +80,8 @@ public class OrderController {
      *
      * @return Una respuesta HTTP con la lista de entidades de pedidos en el sitio.
      */
+    @Operation(summary = "Gets all orders placed on the site")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/onside")
     public ResponseEntity<List<OrderEntity>> getOnSideOrders() {
         List<OrderEntity> orderEntities = this.orderService.getOnSideOrders();
@@ -82,6 +94,8 @@ public class OrderController {
      * @param id El ID del cliente.
      * @return Una respuesta HTTP con la lista de entidades de pedidos del cliente.
      */
+    @Operation(summary = "Gets all orders for a specific customer")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/customer/{id}")
     public ResponseEntity<List<OrderEntity>> getCustomerOrder(@PathVariable String id) {
         List<OrderEntity> orderEntities = this.orderService.getCustomerOrder(id);
@@ -94,6 +108,8 @@ public class OrderController {
      * @param id El ID del pedido.
      * @return Una respuesta HTTP con el resumen del pedido.
      */
+    @Operation(summary = "Gets the summary of a specific order")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/summary/{id}")
     public ResponseEntity<OrderSummary> getSummary(@PathVariable  int id) {
         OrderSummary summary = this.orderService.getSummary(id);
@@ -106,6 +122,8 @@ public class OrderController {
      * @param dto Los datos del pedido aleatorio.
      * @return Una respuesta HTTP con un booleano indicando si el pedido aleatorio fue guardado exitosamente.
      */
+    @Operation(summary = "Create a random order")
+    @ApiResponse(responseCode = "200", description = "OK")
     @PostMapping("/random")
     public ResponseEntity<Boolean> randomOrder(@RequestBody RamdonOrderDto dto) {
         return ResponseEntity.ok(this.orderService.saveRandomOrder(dto));

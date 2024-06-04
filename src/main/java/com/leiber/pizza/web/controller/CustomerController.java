@@ -4,6 +4,8 @@ import com.leiber.pizza.persistence.entity.CustomerEntity;
 import com.leiber.pizza.persistence.entity.OrderEntity;
 import com.leiber.pizza.services.CustomerService;
 import com.leiber.pizza.services.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,9 @@ public class CustomerController {
      * @param phone El número de teléfono del cliente.
      * @return Una respuesta HTTP con la entidad del cliente.
      */
+    @Operation(summary = "Get a customer by phone number")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "No customer with that phone number has been found")
     @GetMapping("/phone/{phone}")
     public ResponseEntity<CustomerEntity> getByPhone(@PathVariable String phone) {
         CustomerEntity customerEntity = this.customerService.findByPhone(phone);
@@ -57,6 +62,9 @@ public class CustomerController {
      * @param id El ID del cliente.
      * @return Una respuesta HTTP con la lista de entidades de pedidos del cliente.
      */
+    @Operation(summary = "Gets a customer's orders by customer id")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "User not found")
     @GetMapping("/customer/{id}")
     public ResponseEntity<List<OrderEntity>> getCustomerOrders(@PathVariable String id) {
         List<OrderEntity> orderEntities = this.orderService.getCustomerOrder(id);

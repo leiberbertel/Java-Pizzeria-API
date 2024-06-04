@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 
 /**
  * Controller para manejar la autenticación de usuarios.
@@ -51,6 +54,9 @@ public class AuthController {
      * @param loginDto Los datos de inicio de sesión del usuario.
      * @return Una respuesta HTTP con el token JWT en el encabezado de autorización.
      */
+    @Operation(summary = "Allows a registered user to log in")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "403", description = "Unauthorized")
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginDto loginDto) {
         UsernamePasswordAuthenticationToken login = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
