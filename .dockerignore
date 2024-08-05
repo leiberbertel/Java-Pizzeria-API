@@ -1,0 +1,8 @@
+.gradle
+build/
+*.log
+*.tmp
+
+.idea/
+*.iml
+*.swp
