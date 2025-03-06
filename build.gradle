@@ -28,9 +28,8 @@ dependencies {
 	implementation 'com.auth0:java-jwt:4.3.0'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	
-	// https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv
-	implementation group: 'io.github.cdimascio', name: 'java-dotenv', version: '5.2.2'
+
+    implementation 'me.paulschwarz:spring-dotenv:3.0.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
